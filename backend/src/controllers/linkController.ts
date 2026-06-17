@@ -44,12 +44,7 @@ export const getAnalytics = async (req: Request, res: Response, next: NextFuncti
     if (!link) return res.status(404).json({ error: "Data missing." });
     
     const timeSeries = {}; const deviceBreakdown = {}; const referrerBreakdown = {};
-    link.analytics.forEach((c) => {
-      const day = c.timestamp.toISOString().split('T')[0];
-      timeSeries[day] = (timeSeries[day] || 0) + 1;
-      deviceBreakdown[c.device] = (deviceBreakdown[c.device] || 0) + 1;
-      referrerBreakdown[c.referrer] = (referrerBreakdown[c.referrer] || 0) + 1;
-    });
+   
     res.json({ totalClicks: link.clicksCount, timeSeries, deviceBreakdown, referrerBreakdown });
   } catch (error) { next(error); }
 };
